@@ -3,7 +3,7 @@
 ## 0.48.2 — Unreleased
 
 ### Added
-- Copilot: add an opt-in organization AI credit lane that fetches `/orgs/{org}/settings/billing/ai_credit/usage` when the token has org billing access, plus user-entered per-seat and organization credit entitlements that turn the credit rows into usage bars — GitHub publishes no credit entitlement on any documented endpoint, so a lane without one stays plain text (#2593). Thanks @KSEGIT!
+- Copilot: add an opt-in organization AI credit lane that fetches `/organizations/{org}/settings/billing/ai_credit/usage` when the token has org billing access, plus user-entered per-seat and organization credit entitlements that turn the credit rows into usage bars — GitHub publishes no credit entitlement on any documented endpoint, so a lane without one stays plain text (#2593). Thanks @KSEGIT!
 
 ### Fixed
 - Codex: SQLite cost saves no longer rescan every stored row and snapshot per file — baseline counts and file lookups are precomputed once, cutting a large-corpus (1,700+ sessions) save pass from minutes of CPU to seconds (refs #2760).
