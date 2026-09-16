@@ -28,7 +28,14 @@ extension StatusItemController {
         } else {
             snapshot?.switcherWeeklyWindow(for: provider, showUsed: showUsed)
         }
-        guard let window else { return nil }
-        return showUsed ? window.usedPercent : window.remainingPercent
+        if let window {
+            return showUsed ? window.usedPercent : window.remainingPercent
+        }
+
+        // Credit-billed Copilot seats can report usage without a metered rate window.
+        guard provider == .copilot,
+              let progress = snapshot?.detailRow(id: CopilotCreditDetailRows.seatRowID)?.progress
+        else { return nil }
+        return showUsed ? progress.usedPercent : max(0, 100 - progress.usedPercent)
     }
 }
