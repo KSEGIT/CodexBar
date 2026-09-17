@@ -31,11 +31,10 @@ extension StatusItemController {
         if let window {
             return showUsed ? window.usedPercent : window.remainingPercent
         }
-
-        // Credit-billed Copilot seats can report usage without a metered rate window.
-        guard provider == .copilot,
-              let progress = snapshot?.detailRow(id: CopilotCreditDetailRows.seatRowID)?.progress
-        else { return nil }
-        return showUsed ? progress.usedPercent : max(0, 100 - progress.usedPercent)
+        guard preference == .automatic,
+              let snapshot,
+              let usedPercent = presentation.fallbackSwitcherUsedPercent(snapshot: snapshot),
+              usedPercent.isFinite else { return nil }
+        return showUsed ? usedPercent : max(0, 100 - usedPercent)
     }
 }
